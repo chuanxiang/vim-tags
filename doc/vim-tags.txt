@@ -1,0 +1,19 @@
+*vim-tags* vim-tags
+
+===============================================================================
+Contents ~
+
+g:tags_debug
+
+g:tags_event
+
+g:tags_root
+
+Command:
+BuildTags
+
+
+
+
+
+

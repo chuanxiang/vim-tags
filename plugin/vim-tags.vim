@@ -46,7 +46,7 @@ endfunction
 "
 function! s:BuildTags()
     if s:CheckProject()
-        exec 'echo "close cscope" && cs kill -1'
+        exec 'cs kill -1'
         exec "!cd ".g:tags_root." && echo 'create source_list.txt ...' && find . -name '*.[ch]' -o -name '*.[ch]pp' > source_list.txt && echo 'create cscope.out ...' && sed -i '/ /d' source_list.txt && cscope -qbR -i source_list.txt && cd - > /dev/null"
         call s:ConnectScope()
     else

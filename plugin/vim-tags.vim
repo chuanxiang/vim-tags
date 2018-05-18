@@ -47,7 +47,10 @@ endfunction
 function! s:BuildTags()
     if s:CheckProject()
         exec 'cs kill -1'
-        exec "!cd ".g:tags_root." && echo 'create source_list.txt ...' && find . -name '*.[ch]' -o -name '*.[ch]pp' > source_list.txt && echo 'create cscope.out ...' && sed -i '/ /d' source_list.txt && cscope -qbR -i source_list.txt && cd - > /dev/null"
+        if (!exists("g:tags_find_cmd"))
+            let g:tags_find_cmd = "find . -name '*.[ch]' -o -name '*.[ch]pp'"
+        endif
+        exec "!cd ".g:tags_root." && echo 'create source_list.txt ...' && ".g:tags_find_cmd." > source_list.txt && echo 'create cscope.out ...' && sed -ie '/ /d' source_list.txt && cscope -qbR -i source_list.txt && cd - > /dev/null"
         call s:ConnectScope()
     else
         call s:DebugPrint(0, "No Source Root defined!")

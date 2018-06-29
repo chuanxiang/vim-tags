@@ -66,7 +66,8 @@ function! s:ConnectScope()
     if s:CheckProject()
         let s:cscope_fn = g:tags_root . '/cscope.out'
         if filereadable(s:cscope_fn)
-            exec 'cs add ' . s:cscope_fn
+            " Add cscope with -C (case insensitive)
+            exec 'cs add ' . s:cscope_fn . ' ' . g:tags_root . ' ' . '-C'
             call s:DebugPrint(0, 'cscope.out connected.')
         else
             call s:DebugPrint(0, 'cscope.out not found.')

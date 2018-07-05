@@ -46,7 +46,7 @@ endfunction
 "
 function! s:BuildTags()
     if s:CheckProject()
-        exec 'cs kill -1'
+        silent exec 'cs kill -1'
         if (!exists("g:tags_find_cmd"))
             let g:tags_find_cmd = "find . -name '*.[ch]' -o -name '*.[ch]pp'"
         endif
@@ -64,10 +64,11 @@ endfunction
 "
 function! s:ConnectScope()
     if s:CheckProject()
+        silent exec 'cs kill -1'
         let s:cscope_fn = g:tags_root . '/cscope.out'
         if filereadable(s:cscope_fn)
             " Add cscope with -C (case insensitive)
-            exec 'cs add ' . s:cscope_fn . ' ' . g:tags_root . ' ' . '-C'
+            silent exec 'cs add ' . s:cscope_fn . ' ' . g:tags_root . ' ' . '-C'
             call s:DebugPrint(0, 'cscope.out connected.')
         else
             call s:DebugPrint(0, 'cscope.out not found.')
@@ -81,10 +82,11 @@ endfunction
 " output debug message, if this message has high enough importance
 "
 function! s:DebugPrint(level, text)
-  if (g:tags_debug >= a:level)
+  if (g:tags_debug > a:level)
     echom "tags: " . a:text
   endif
 endfunction
 
 command! BuildTags call s:BuildTags()
+command! ConnectScope call s:ConnectScope()
 
